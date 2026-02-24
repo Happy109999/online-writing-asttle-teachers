@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Create Test</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="header">
+  <div>Create Test</div>
+  <div id="headerUser"></div>
+</div>
+
+<div class="sidebar">
+  <a href="index.html">Dashboard</a>
+  <a href="create-test.html">Create Test</a>
+  <a href="tests.html">Your Tests</a>
+  <a href="setup-students.html">Setup Students</a>
+  <a href="#" id="logoutBtn">Logout</a>
+</div>
+
+<div class="main">
+  <div class="card">
+    <h2>Create New Test</h2>
+
+    <textarea id="prompt" rows="4" placeholder="Enter writing prompt..."></textarea>
+
+    <select id="yearLevel">
+      <option value="7">Year 7</option>
+      <option value="8">Year 8</option>
+      <option value="9">Year 9</option>
+      <option value="10">Year 10</option>
+    </select>
+
+    <button id="createTestBtn">Create Test</button>
+    <div id="createMsg" style="margin-top:10px;"></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="main.js"></script>
+
+<script>
+checkAuth();
+
+function generateTestId() {
+  const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+  let id = "";
+  for (let i = 0; i < 6; i++) id += chars[Math.floor(Math.random() * chars.length)];
+  return id;
+}
+
+document.getElementById("createTestBtn").onclick = async () => {
+  const prompt = document.getElementById("prompt").value.trim();
+  const year = document.getElementById("yearLevel").value;
+  const msg = document.getElementById("createMsg");
+
+  if (!prompt) {
+    msg.textContent = "Prompt required.";
+    msg.style.color = "red";
+    return;
+  }
+
+  const testId = generateTestId();
+  const createdAt = new Date().toISOString();
+
+  const { data: userData } = await supabase.auth.getUser();
+
+  const { error } = await supabase.from("tests").insert({
+    test_id: testId,
+    teacher_id: userData.user.id,
+    prompt: prompt,
+    year_level: year,
+    created_at: createdAt
+  });
+
+  if (error) {
+    msg.textContent = error.message;
+    msg.style.color = "red";
+  } else {
+    msg.textContent = `Test created. Test ID: ${testId}`;
+    msg.style.color = "green";
+  }
+};
+</script>
+
+</body>
+</html>
