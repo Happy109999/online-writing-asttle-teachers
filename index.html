@@ -3,61 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <title>Teacher Dashboard</title>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; }
-    .card { border: 1px solid #ccc; padding: 16px; border-radius: 8px; margin-bottom: 20px; }
-    input, textarea, select, button { width: 100%; margin: 6px 0; padding: 8px; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th, td { border: 1px solid #ddd; padding: 8px; }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <h1>Teacher Dashboard</h1>
-
-  <!-- LOGIN / SIGNUP -->
-  <div id="authSection" class="card">
-    <h2>Login</h2>
-    <input id="email" type="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
-    <button id="loginBtn">Login</button>
-    <button id="signupBtn">Sign Up</button>
-    <div id="authMsg" style="color:red;margin-top:10px;"></div>
+  <!-- HEADER -->
+  <div class="header">
+    <div>Online Writing aTTle — Teacher Dashboard</div>
+    <div id="headerUser"></div>
   </div>
 
-  <!-- DASHBOARD -->
-  <div id="dashboard" style="display:none;">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <a href="index.html">Dashboard</a>
+    <a href="create-test.html">Create Test</a>
+    <a href="setup-students.html">Setup Students</a>
+    <a href="tests.html">Your Tests</a>
+    <a href="#" id="logoutBtn">Logout</a>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
 
     <div class="card">
-      <h2>Create New Test</h2>
-      <textarea id="prompt" rows="4" placeholder="Enter writing prompt..."></textarea>
-
-      <select id="yearLevel">
-        <option value="7">Year 7</option>
-        <option value="8">Year 8</option>
-        <option value="9">Year 9</option>
-        <option value="10">Year 10</option>
-      </select>
-
-      <button id="createTestBtn">Create Test</button>
-      <div id="createMsg" style="margin-top:10px;"></div>
+      <h2>Welcome</h2>
+      <p>This is your teacher dashboard. Use the menu on the left to manage tests and students.</p>
     </div>
 
     <div class="card">
-      <h2>Your Tests</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Test ID</th>
-            <th>Year</th>
-            <th>Created</th>
-          </tr>
-        </thead>
-        <tbody id="testsBody"></tbody>
-      </table>
+      <h2>Quick Actions</h2>
+      <button onclick="location.href='create-test.html'">Create New Test</button>
+      <button onclick="location.href='tests.html'">View Your Tests</button>
+      <button onclick="location.href='setup-students.html'">Setup Students</button>
     </div>
 
-    <button id="logoutBtn">Logout</button>
   </div>
 
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
@@ -66,3 +45,4 @@
 
 </body>
 </html>
+
