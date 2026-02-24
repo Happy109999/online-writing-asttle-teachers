@@ -7,82 +7,76 @@
 </head>
 <body>
 
-  <!-- HEADER -->
-  <div class="header">
-    <div>Online Writing aTTle — Teacher Dashboard</div>
-    <div id="headerUser"></div>
+<div id="header" class="header" style="display:none;">
+  <div>Online Writing aTTle — Teacher Dashboard</div>
+  <div id="headerUser"></div>
+</div>
+
+<div id="sidebar" class="sidebar" style="display:none;">
+  <a href="index.html">Dashboard</a>
+  <a href="create-test.html">Create Test</a>
+  <a href="tests.html">Your Tests</a>
+  <a href="setup-students.html">Setup Students</a>
+  <a href="#" id="logoutBtn">Logout</a>
+</div>
+
+<div class="main">
+
+  <div id="loginCard" class="card" style="max-width:500px;margin:auto;">
+    <h2>Login</h2>
+
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <button id="loginBtn">Login</button>
+
+    <p>Don't have an account?  
+      <a href="signup.html">Sign up here</a>
+    </p>
+
+    <div id="authMsg" style="color:red;margin-top:10px;"></div>
   </div>
 
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <a href="index.html">Dashboard</a>
-    <a href="create-test.html">Create Test</a>
-    <a href="tests.html">Your Tests</a>
-    <a href="setup-students.html">Setup Students</a>
-    <a href="#" id="logoutBtn">Logout</a>
+  <div id="dashboardCard" class="card" style="display:none;">
+    <h2>Welcome</h2>
+    <p>Use the menu on the left to manage tests and students.</p>
   </div>
 
-  <!-- MAIN CONTENT -->
-  <div class="main">
+</div>
 
-    <!-- LOGIN CARD -->
-    <div id="loginCard" class="card">
-      <h2>Login</h2>
-      <input id="email" type="email" placeholder="Email">
-      <input id="password" type="password" placeholder="Password">
-      <button id="loginBtn">Login</button>
-      <button id="signupBtn">Sign Up</button>
-      <div id="authMsg" style="color:red;margin-top:10px;"></div>
-    </div>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="main.js"></script>
 
-    <!-- DASHBOARD HOME -->
-    <div id="dashboardCard" class="card" style="display:none;">
-      <h2>Welcome</h2>
-      <p>Use the menu on the left to manage tests and students.</p>
+<script>
+async function checkLogin() {
+  const { data } = await supabase.auth.getUser();
 
-      <button onclick="location.href='create-test.html'">Create New Test</button>
-      <button onclick="location.href='tests.html'">View Your Tests</button>
-      <button onclick="location.href='setup-students.html'">Setup Students</button>
-    </div>
+  if (data.user) {
+    document.getElementById("loginCard").style.display = "none";
+    document.getElementById("dashboardCard").style.display = "block";
 
-  </div>
+    document.getElementById("header").style.display = "flex";
+    document.getElementById("sidebar").style.display = "block";
 
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script src="supabase.js"></script>
-  <script src="main.js"></script>
+    document.getElementById("headerUser").textContent = data.user.email;
+  }
+}
 
-  <script>
-    async function checkLogin() {
-      const { data } = await supabase.auth.getUser();
-      if (data.user) {
-        document.getElementById("loginCard").style.display = "none";
-        document.getElementById("dashboardCard").style.display = "block";
-        document.getElementById("headerUser").textContent = data.user.email;
-      }
-    }
+document.getElementById("loginBtn").onclick = async () => {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const msg = document.getElementById("authMsg");
 
-    document.getElementById("loginBtn").onclick = async () => {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const msg = document.getElementById("authMsg");
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
 
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) msg.textContent = error.message;
-      else location.reload();
-    };
+  if (error) msg.textContent = error.message;
+  else location.reload();
+};
 
-    document.getElementById("signupBtn").onclick = async () => {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const msg = document.getElementById("authMsg");
-
-      const { error } = await supabase.auth.signUp({ email, password });
-      if (error) msg.textContent = error.message;
-      else msg.textContent = "Account created. You can now log in.";
-    };
-
-    checkLogin();
-  </script>
+checkLogin();
+</script>
 
 </body>
+
 </html>
