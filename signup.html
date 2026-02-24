@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Teacher Signup</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="header">
+  <div>Teacher Signup</div>
+</div>
+
+<div class="main">
+  <div class="card" style="max-width:500px;margin:auto;">
+    <h2>Create Account</h2>
+
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <button id="signupBtn">Sign Up</button>
+
+    <div id="msg" style="margin-top:10px;color:red;"></div>
+
+    <p>Already have an account?  
+      <a href="index.html">Login here</a>
+    </p>
+  </div>
+</div>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<script>
+document.getElementById("signupBtn").onclick = async () => {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const msg = document.getElementById("msg");
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: window.location.origin + "/index.html"
+    }
+  });
+
+  if (error) {
+    msg.textContent = error.message;
+  } else {
+    msg.style.color = "green";
+    msg.textContent = "Check your email to verify your account.";
+  }
+};
+</script>
+
+</body>
+</html>
