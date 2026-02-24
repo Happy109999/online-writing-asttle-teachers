@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Writing Submissions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: blue;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            width: 200px;
+            background-color: #f0f0f0;
+            float: left;
+            height: 100%;
+            padding: 15px;
+        }
+        main {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        .student-info {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .ai-results {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #e7f3fe;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Viewing Student Writing Submissions</h1>
+    </header>
+    <nav>
+        <h2>Navigation</h2>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Submit Writing</a></li>
+            <li><a href="#">View Submissions</a></li>
+            <li><a href="#">AI Marking</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="student-info">
+            <h3>Student Info</h3>
+            <p>Name: John Doe</p>
+            <p>Student ID: 123456</p>
+            <p>Class Name: Grade 10</p>
+        </div>
+        <div class="submitted-writing">
+            <h3>Submitted Writing</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse auctor.</p>
+        </div>
+        <div class="ai-results">
+            <h3>AI Marking Results</h3>
+            <pre>{
+    "score": 85,
+    "feedback": "Good use of vocabulary but needs structural improvement.",
+    "suggestions": [
+        "Add more examples",
+        "Improve introduction"
+    ]
+}</pre>
+        </div>
+        <p>Timestamp: 2026-02-24 06:11:56 UTC</p>
+        <div class="buttons">
+            <button onclick="window.history.back();">Back</button>
+            <button onclick="window.location.href='submissions.html';">View All Submissions</button>
+        </div>
+        <script>
+            // Supabase integration code goes here
+        </script>
+    </main>
+</body>
+</html>
