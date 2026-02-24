@@ -1,0 +1,98 @@
+/* ====== GLOBAL ====== */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #e6e9ed;
+  color: #333;
+}
+
+/* ====== TOP HEADER ====== */
+.header {
+  background: #003366;
+  color: white;
+  padding: 14px 20px;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ====== SIDEBAR ====== */
+.sidebar {
+  width: 220px;
+  background: #f2f2f2;
+  height: 100vh;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  padding-top: 20px;
+  border-right: 1px solid #ccc;
+}
+
+.sidebar a {
+  display: block;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: #003366;
+  font-weight: bold;
+}
+
+.sidebar a:hover {
+  background: #d9e6f2;
+}
+
+/* ====== MAIN CONTENT ====== */
+.main {
+  margin-left: 240px;
+  padding: 20px;
+}
+
+/* ====== CARDS ====== */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+/* ====== INPUTS ====== */
+input, textarea, select, button {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  font-size: 14px;
+}
+
+button {
+  background: #0055A4;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #003f7f;
+}
+
+/* ====== TABLE ====== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+
+th {
+  background: #f0f4f7;
+  font-weight: bold;
+}
