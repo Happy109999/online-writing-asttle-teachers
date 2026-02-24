@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Your Tests</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="header">
+  <div>Your Tests</div>
+  <div id="headerUser"></div>
+</div>
+
+<div class="sidebar">
+  <a href="index.html">Dashboard</a>
+  <a href="create-test.html">Create Test</a>
+  <a href="tests.html">Your Tests</a>
+  <a href="setup-students.html">Setup Students</a>
+  <a href="#" id="logoutBtn">Logout</a>
+</div>
+
+<div class="main">
+  <div class="card">
+    <h2>All Tests</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Test ID</th>
+          <th>Year</th>
+          <th>Created</th>
+          <th>Open</th>
+        </tr>
+      </thead>
+      <tbody id="testsBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="main.js"></script>
+
+<script>
+checkAuth();
+
+async function loadTests() {
+  const { data: userData } = await supabase.auth.getUser();
+  const { data, error } = await supabase
+    .from("tests")
+    .select("*")
+    .eq("teacher_id", userData.user.id)
+    .order("created_at", { ascending: false });
+
+  const tbody = document.getElementById("testsBody");
+  tbody.innerHTML = "";
+
+  if (!data || data.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='4'>No tests yet.</td></tr>";
+    return;
+  }
+
+  data.forEach(t => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${t.test_id}</td>
+      <td>${t.year_level}</td>
+      <td>${new Date(t.created_at).toLocaleString()}</td>
+      <td><button onclick="openTest('${t.test_id}')">Open</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function openTest(id) {
+  window.location.href = "test.html?id=" + id;
+}
+
+loadTests();
+</script>
+
+</body>
+</html>
