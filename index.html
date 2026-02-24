@@ -17,21 +17,29 @@
   <div class="sidebar">
     <a href="index.html">Dashboard</a>
     <a href="create-test.html">Create Test</a>
-    <a href="setup-students.html">Setup Students</a>
     <a href="tests.html">Your Tests</a>
+    <a href="setup-students.html">Setup Students</a>
     <a href="#" id="logoutBtn">Logout</a>
   </div>
 
   <!-- MAIN CONTENT -->
   <div class="main">
 
-    <div class="card">
-      <h2>Welcome</h2>
-      <p>This is your teacher dashboard. Use the menu on the left to manage tests and students.</p>
+    <!-- LOGIN CARD -->
+    <div id="loginCard" class="card">
+      <h2>Login</h2>
+      <input id="email" type="email" placeholder="Email">
+      <input id="password" type="password" placeholder="Password">
+      <button id="loginBtn">Login</button>
+      <button id="signupBtn">Sign Up</button>
+      <div id="authMsg" style="color:red;margin-top:10px;"></div>
     </div>
 
-    <div class="card">
-      <h2>Quick Actions</h2>
+    <!-- DASHBOARD HOME -->
+    <div id="dashboardCard" class="card" style="display:none;">
+      <h2>Welcome</h2>
+      <p>Use the menu on the left to manage tests and students.</p>
+
       <button onclick="location.href='create-test.html'">Create New Test</button>
       <button onclick="location.href='tests.html'">View Your Tests</button>
       <button onclick="location.href='setup-students.html'">Setup Students</button>
@@ -43,6 +51,38 @@
   <script src="supabase.js"></script>
   <script src="main.js"></script>
 
+  <script>
+    async function checkLogin() {
+      const { data } = await supabase.auth.getUser();
+      if (data.user) {
+        document.getElementById("loginCard").style.display = "none";
+        document.getElementById("dashboardCard").style.display = "block";
+        document.getElementById("headerUser").textContent = data.user.email;
+      }
+    }
+
+    document.getElementById("loginBtn").onclick = async () => {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const msg = document.getElementById("authMsg");
+
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) msg.textContent = error.message;
+      else location.reload();
+    };
+
+    document.getElementById("signupBtn").onclick = async () => {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const msg = document.getElementById("authMsg");
+
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) msg.textContent = error.message;
+      else msg.textContent = "Account created. You can now log in.";
+    };
+
+    checkLogin();
+  </script>
+
 </body>
 </html>
-
